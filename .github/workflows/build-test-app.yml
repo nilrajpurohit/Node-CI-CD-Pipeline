@@ -14,8 +14,25 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      
+      - name: Use Node.js 24
+        uses: actions/setup-node@v6
         with:
           node-version: 24
-      - run: npm ci
-      - run: npm test
+      
+      - name: Install dependencies and run tests
+        run: |
+          npm ci
+          npm test
+      
+      - name: Build the app
+        run: npm run build
+      
+      - name: Verify build output
+        run: |
+          if [ -d "dist" ]; then
+            echo "Build successful, 'dist' directory exists."
+          else
+            echo "Build failed, 'dist' directory does not exist."
+            exit 1
+          fi
