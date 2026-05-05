@@ -29,6 +29,7 @@ jobs:
         run: npm run build
       
       - name: Verify build output
+        shell: bash
         run: |
           if [ -d "dist" ]; then
             echo "Build successful, 'dist' directory exists."
